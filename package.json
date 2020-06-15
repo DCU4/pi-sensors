@@ -1,0 +1,16 @@
+{
+  "name": "sensor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Dylan Connor",
+  "license": "ISC",
+  "dependencies": {
+    "node-dht-sensor": "^0.4.2",
+    "onoff": "^5.0.1",
+    "socket.io": "^2.3.0"
+  }
+}
