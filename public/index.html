@@ -3,13 +3,46 @@
   <head>
     <style>
 
+      html {
+        font-size: 16px;
+        box-sizing: border-box;
+      }
+
       body {
-        padding: 60px;
+        /* padding: 60px; */
         font-family: 'Avenir', sans-serif;
+        width: 100%;
+        height: 100vh;
+        padding: 0 60px;
+        color: black;
+        background-color: white;
+        transition: all .5s ease;
+      }
+      body.dark {
+        color: white;
+        background-color: black;
       }
 
       h1 {
-        font-size: 66px;
+        font-size:5rem;
+       
+      }
+      p {
+        font-size: 4.5em;
+        /* padding: 0 60px; */
+      }
+
+      .container {
+        /* padding: 0 60px; */
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+      }
+      .row p {
+        padding:0;
       }
       /* The switch - the box around the slider */
     .switch {
@@ -73,20 +106,32 @@
     .slider.round:before {
       border-radius: 50%;
     }
+
+    hr {
+      padding: 0 60px;
+    }
     </style>
   </head>
 <body>
-<h1>Control my Sensor ;)</h1>
+  <h1>Control my Sensor ;)</h1>
+  <section class="container">
+    <div class="row">
+      <p>Magnet Sensor</p>
+      <label class="switch">
+        <input type="checkbox" id="light">
+        <span class="slider round"></span>
+      </label>
+    </div>
+    
+    <hr>
 
-<div class="temp-data">
+    <div class="temp-data">
+      <p id="temp"></p>
+      <p id="humid"></p>
+    </div>
+  </section>
 
-  <p id="temp"></p>
-  <p id="humid"></p>
-</div>
-<label class="switch">
-  <input type="checkbox" id="light">
-  <span class="slider round"></span>
-</label>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script> 
 <script>
 // var socket = io.connect('https://light-switch-dc.herokuapp.com:13154'); //load socket.io-client and connect to the host that serves the page
@@ -100,11 +145,14 @@ window.addEventListener("load", function(){ //when page loads
 });
 socket.on('light', function (data) { //get button status from client
   // console.log('light', data);
+  let body = document.querySelector('body');
   if (data) {
     console.log('on')
+    body.classList.add('dark');
   } else {
     console.log('off')
-}
+    body.classList.remove('dark');
+  }
   document.getElementById("light").checked = data; //change checkbox according to push button on Raspberry Pi
   socket.emit("light", data); //send push button status to back to server
 });
