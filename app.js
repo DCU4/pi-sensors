@@ -33,10 +33,14 @@ function exec(body) {
           `humidity: ${res.humidity.toFixed(1)}%`
       );
       count++;
-      // (24°C × 9/5) + 32
+      let date = new Date().toLocaleTimeString('en-US', {timeZone:'America/New_York'});
+
+      // let timezoneOffset = date.getTimezoneOffset()/ 60;
+      // console.log(date.toLocaleTimeString(),timezoneOffset)
       body.write(`
-        <h4>temp: ${(res.temperature.toFixed(1) * 9/5)+32}F</h4>
-        <h4>humidity: ${res.humidity.toFixed(1)}%</h4>
+        <p>${date}</p>
+        <p>Temp: ${(res.temperature.toFixed(1) * 9/5)+32}F</p>
+        <p>Humidity: ${res.humidity.toFixed(1)}%</p>
       `)
       body.end();
     },
